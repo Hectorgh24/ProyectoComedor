@@ -1,6 +1,5 @@
-package com.example.proyecto_comedor.ui.components.Comentario
-
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -25,69 +24,50 @@ fun EvaluacionSeccion() {
         modifier = Modifier.padding(vertical = 4.dp)
     )
 
-    // Dropdowns para evaluar aspectos
+    // Row deslizable horizontalmente
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .horizontalScroll(rememberScrollState()) // <- Esto permite deslizar
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // Dropdown de Precio
-        DropdownSelector(
-            text = "Precio",
-            modifier = Modifier.weight(1f)
-        )
-
-        // Dropdown de Cantidad
-        DropdownSelector(
-            text = "Cantidad",
-            modifier = Modifier.weight(1f)
-        )
-
-        // Dropdown de Sabor
-        DropdownSelector(
-            text = "Sabor",
-            modifier = Modifier.weight(1f)
-        )
-
-        // Dropdown de Tiempo
-        DropdownSelector(
-            text = "Tiemp",
-            modifier = Modifier.weight(1f)
-        )
+        DropdownSelector(label = "Precio", options = listOf("Bajo", "Medio", "Alto"))
+        DropdownSelector(label = "Porción", options = listOf("Poca", "Adecuada", "Mucha"))
+        DropdownSelector(label = "Sabor", options = listOf("Malo", "Regular", "Bueno", "Excelente"))
+        DropdownSelector(label = "Tiempo", options = listOf("Rápido", "Aceptable", "Lento"))
+        // Puedes agregar más Chips aquí si quieres
     }
 }
 
 @Composable
 fun DropdownSelector(
-    text: String,
+    label: String,
     modifier: Modifier = Modifier,
     options: List<String> = emptyList(),
     onSelectionChange: (String) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var selectedOption by remember { mutableStateOf<String?>(null) }
 
     Box(modifier = modifier) {
-        OutlinedButton(
+        AssistChip(
             onClick = { expanded = true },
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(horizontal = 8.dp),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
-        ) {
-            Text(
-                text = text,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f)
-            )
-            Icon(
-                imageVector = Icons.Filled.ArrowDropDown,
-                contentDescription = null
-            )
-        }
+            label = {
+                Text(
+                    text = selectedOption ?: label,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.ArrowDropDown,
+                    contentDescription = null
+                )
+            }
+        )
 
-        // Implementación del DropdownMenu (comentado para simplificar)
-        /*
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -96,12 +76,12 @@ fun DropdownSelector(
                 DropdownMenuItem(
                     text = { Text(option) },
                     onClick = {
+                        selectedOption = option
                         onSelectionChange(option)
                         expanded = false
                     }
                 )
             }
         }
-        */
     }
 }

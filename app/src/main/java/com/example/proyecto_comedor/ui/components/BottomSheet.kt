@@ -1,5 +1,6 @@
 package com.example.proyecto_comedor.ui.components
 
+import EvaluacionSeccion
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -8,7 +9,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
 import com.example.proyecto_comedor.ui.components.Comentario.BotonEnviar
 import com.example.proyecto_comedor.ui.components.Comentario.BotonesSeccion
-import com.example.proyecto_comedor.ui.components.Comentario.EvaluacionSeccion
 import com.example.proyecto_comedor.ui.components.Comentario.SatisfaccionSeccion
 import com.example.proyecto_comedor.ui.components.Informacion.InformacionNutrimental
 

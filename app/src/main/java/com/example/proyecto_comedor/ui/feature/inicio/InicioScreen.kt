@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -65,7 +66,9 @@ fun InicioScreen() {
         // Contenido principal
         Column(
             modifier = Modifier.fillMaxSize()
+                .padding(top = 36.dp)//solución al error de espaciado superior
         ) {
+
             FoodSearchBar(drawerState = drawerState)
 
             Spacer(modifier = Modifier.height(8.dp))

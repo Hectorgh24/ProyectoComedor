@@ -16,6 +16,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyecto_comedor.ui.feature.inicio.MenuDelDiaScreen
 import com.example.proyecto_comedor.ui.feature.inicio.PromocionesScreen
 import com.example.proyecto_comedor.ui.feature.inicio.CartaScreen
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+
 
 @Preview
 @Composable
@@ -23,6 +26,8 @@ import com.example.proyecto_comedor.ui.feature.inicio.CartaScreen
 fun MenuTabs() {
     var state by remember { mutableStateOf(0) }
     val titles = listOf("Menú del día", "Carta", "Promociones")
+
+    val navController = rememberNavController()
 
     Column {
         PrimaryTabRow(selectedTabIndex = state) {

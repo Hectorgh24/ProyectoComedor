@@ -27,10 +27,11 @@ fun AppNavigation() {
                 BottomNavigation(navController = navController)
             }
         }
-    ) {
+    ) { innerPadding -> // ← aquí se captura el padding del Scaffold
         NavHost(
             navController = navController,
-            startDestination = "login_screen"
+            startDestination = "login_screen",
+            modifier = Modifier.padding(innerPadding) // ← ¡esto arregla el problema!
         ) {
             composable("login_screen") {
                 LoginScreen(navController = navController)

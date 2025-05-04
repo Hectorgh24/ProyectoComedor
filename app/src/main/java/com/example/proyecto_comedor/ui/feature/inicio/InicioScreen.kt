@@ -66,7 +66,6 @@ fun InicioScreen() {
         // Contenido principal
         Column(
             modifier = Modifier.fillMaxSize()
-                .padding(top = 36.dp)//solución al error de espaciado superior
         ) {
 
             FoodSearchBar(drawerState = drawerState)

@@ -1,6 +1,7 @@
 package com.example.proyecto_comedor.ui.components
 
 
+
 import android.os.Build
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
@@ -20,6 +21,6 @@ fun SearchBarSelector(
         CustomSearchBar(drawerState = drawerState, onSearch = onSearch)
     } else {
         // Usar la barra de búsqueda de Material 3 para versiones más recientes
-        FoodSearchBar(drawerState = drawerState)
+        CustomizableSearchBarExample()
     }
 }

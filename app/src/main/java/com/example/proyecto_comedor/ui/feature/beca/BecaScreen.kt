@@ -44,7 +44,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-import com.example.proyecto_comedor.ui.components.FoodSearchBar
+
 import com.example.proyecto_comedor.ui.components.MenuTabs
 import kotlinx.coroutines.launch
 

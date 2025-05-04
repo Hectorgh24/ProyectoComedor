@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
 fun CategoriaCard(nombre: String) {
@@ -24,7 +25,9 @@ fun CategoriaCard(nombre: String) {
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .clickable { /* Acción al hacer clic */ },
+                .clickable {
+
+                },
         ) {
             Text(
                 text = nombre,

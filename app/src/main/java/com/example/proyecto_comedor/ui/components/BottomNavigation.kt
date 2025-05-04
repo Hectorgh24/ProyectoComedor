@@ -15,18 +15,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.outlined.LocationOn
 
 @Composable
 fun BottomNavigation(navController: NavController) {
     var selectedItem by remember { mutableStateOf(0) }
-    val items = listOf("Inicio", "Beca")
+    val items = listOf("Inicio", "Comedores", "Beca")
 
     val icons = listOf(
         Icons.Outlined.Home to Icons.Filled.Home,
+        Icons.Outlined.LocationOn to Icons.Filled.LocationOn,
         Icons.Outlined.VolunteerActivism to Icons.Filled.VolunteerActivism
     )
 
-    val routes = listOf("inicio_screen", "beca_screen")
+    val routes = listOf("inicio_screen", "comedores-screen", "beca_screen")
 
     NavigationBar() {
         items.forEachIndexed { index, item ->

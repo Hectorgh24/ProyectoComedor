@@ -19,7 +19,7 @@ fun AppNavigation() {
     AppScaffold(
         navController = navController,
 
-    )
+        )
 }
 
 @Composable
@@ -28,12 +28,11 @@ fun AppScaffold(navController: NavHostController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     val fullScreenRoutes = listOf("usuario", "configuracion", "acerca")
+    val isFullScreenRoute = currentRoute in fullScreenRoutes || currentRoute?.startsWith("categoria/") == true
 
-    if (currentRoute in fullScreenRoutes) {
-        // Pantallas sin Scaffold
+    if (isFullScreenRoute) {
         AppNavGraph(navController = navController, paddingValues = PaddingValues())
     } else {
-        // Pantallas con Scaffold
         Scaffold(
             topBar = {
                 FoodSearchBar(navController = navController)
@@ -49,3 +48,4 @@ fun AppScaffold(navController: NavHostController) {
         }
     }
 }
+

@@ -13,17 +13,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import com.example.proyecto_comedor.ui.feature.inicio.MenuDelDiaScreen
 import com.example.proyecto_comedor.ui.feature.inicio.PromocionesScreen
 import com.example.proyecto_comedor.ui.feature.inicio.CartaScreen
 
-@Preview
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
-fun MenuTabs() {
+fun MenuTabs(onCategoriaClick: (String) -> Unit) {
     var state by remember { mutableStateOf(0) }
     val titles = listOf("Menú del día", "Carta", "Promociones")
-
     Column {
         PrimaryTabRow(selectedTabIndex = state) {
             titles.forEachIndexed { index, title ->
@@ -34,13 +32,13 @@ fun MenuTabs() {
                 )
             }
         }
-
         // Contenido que cambia según la pestaña seleccionada
         when (state) {
             0 -> MenuDelDiaScreen()
-            1 -> CartaScreen()
+            1 -> CartaScreen(onCategoriaClick = onCategoriaClick)
             2 -> PromocionesScreen()
         }
     }
 }
+
 

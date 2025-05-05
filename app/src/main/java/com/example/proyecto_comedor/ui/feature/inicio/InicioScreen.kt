@@ -17,7 +17,13 @@ import com.example.proyecto_comedor.ui.components.SearchBarSelector
 import com.example.proyecto_comedor.ui.components.MenuTabs
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 /*@Composable
@@ -46,18 +52,17 @@ fun InicioScreen() {
         }
 }*/
 @Composable
-fun InicioScreen() {
-
-
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        MenuTabs()
-
+fun InicioScreen(navController: NavHostController) {
+    Spacer(modifier = Modifier.height(8.dp))
+    MenuTabs(
+        onCategoriaClick = { nombreCategoria ->
+            // Usamos la nueva estructura de ruta
+            navController.navigate("categoria/$nombreCategoria")
+        }
+    )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewInicioScreen() {
-    InicioScreen()
-}
+
+
+
+

@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-
+import androidx.navigation.NavHostController
 
 @Composable
-fun CategoriasGrid() {
+fun CategoriasGrid(onCategoriaClick: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -23,14 +23,12 @@ fun CategoriasGrid() {
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-
         val categorias = listOf(
             "Antojitos", "Guarniciones",
             "Sandwiches", "Tortas",
             "Postres", "Otros",
             "Label", "Label"
         )
-
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -38,7 +36,10 @@ fun CategoriasGrid() {
             modifier = Modifier.fillMaxWidth()
         ) {
             items(categorias.size) { index ->
-                CategoriaCard(nombre = categorias[index])
+                CategoriaCard(
+                    nombre = categorias[index],
+                    onClick = { onCategoriaClick(it) }
+                )
             }
         }
     }

@@ -58,14 +58,12 @@ fun AcercaScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Imagen del logo
             Image(
                 painter = painterResource(id = R.drawable.comedor_info),
                 contentDescription = "Logo de la aplicación",
                 modifier = Modifier.size(100.dp)
             )
 
-            // Título de la aplicación
             Text(
                 text = "MiComedor",
                 style = MaterialTheme.typography.headlineMedium,
@@ -73,7 +71,6 @@ fun AcercaScreen(navController: NavController) {
                 color = MaterialTheme.colorScheme.primary
             )
 
-            // Versión
             Text(
                 text = "Versión 1.0.0 (Experimental)",
                 style = MaterialTheme.typography.bodyLarge
@@ -83,14 +80,12 @@ fun AcercaScreen(navController: NavController) {
             HorizontalDivider()
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Descripción
             Text(
                 text = "Aplicación oficial del Comedor Universitario",
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
 
-            // Información de desarrollo
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -152,7 +147,6 @@ fun AcercaScreen(navController: NavController) {
                         )
                     }
 
-                    // URL como enlace interactivo con ícono
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.clickable {
@@ -186,7 +180,6 @@ fun AcercaScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Derechos de autor
             Text(
                 text = "© 2025 Universidad Veracruzana. Todos los derechos reservados.",
                 style = MaterialTheme.typography.bodySmall,

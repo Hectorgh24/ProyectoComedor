@@ -18,8 +18,6 @@ import androidx.navigation.NavController
 @Composable
 fun ConfiguracionScreen(navController: NavController) {
     val scrollState = rememberScrollState()
-    val context = LocalContext.current
-    val uriHandler = LocalUriHandler.current
 
     Scaffold(
         topBar = {

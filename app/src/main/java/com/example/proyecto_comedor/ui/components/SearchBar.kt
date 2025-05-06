@@ -42,7 +42,6 @@ fun FoodSearchBar(navController: NavController) {
     val scope = rememberCoroutineScope()
     val showMenu = remember { mutableStateOf(false) }
 
-    // Integración con reconocimiento de voz
     val (_, startSpeechRecognition) = rememberSpeechRecognition { spokenText ->
         textFieldState.setTextAndPlaceCursorAtEnd(spokenText)
     }
@@ -70,7 +69,6 @@ fun FoodSearchBar(navController: NavController) {
                 },
                 trailingIcon = {
                     if (searchBarState.currentValue == SearchBarValue.Expanded) {
-                        // Mostrar icono de micrófono cuando está expandida
                         IconButton(onClick = { startSpeechRecognition() }) {
                             Icon(
                                 imageVector = Icons.Default.Mic,
@@ -78,7 +76,6 @@ fun FoodSearchBar(navController: NavController) {
                             )
                         }
                     } else {
-                        // Mostrar icono de tres puntos cuando está colapsada
                         Box {
                             IconButton(onClick = { showMenu.value = !showMenu.value }) {
                                 Icon(Icons.Default.MoreVert, contentDescription = "Más opciones")
@@ -149,7 +146,6 @@ fun FoodSearchBar(navController: NavController) {
         )
     }
 
-    // Mostrar ExpandedFullScreenSearchBar solo cuando esté expandido
     if (searchBarState.currentValue == SearchBarValue.Expanded) {
         ExpandedFullScreenSearchBar(
             state = searchBarState,

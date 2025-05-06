@@ -9,8 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
@@ -18,8 +16,6 @@ import androidx.navigation.NavController
 @Composable
 fun UsuarioScreen(navController: NavController) {
     val scrollState = rememberScrollState()
-    val context = LocalContext.current
-    val uriHandler = LocalUriHandler.current
 
     Scaffold(
         topBar = {

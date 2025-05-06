@@ -1,8 +1,6 @@
-// MenuTabs.kt
 package com.example.proyecto_comedor.ui.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -12,8 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
 import com.example.proyecto_comedor.ui.feature.inicio.MenuDelDiaScreen
 import com.example.proyecto_comedor.ui.feature.inicio.PromocionesScreen
 import com.example.proyecto_comedor.ui.feature.inicio.CartaScreen
@@ -32,7 +28,6 @@ fun MenuTabs(onCategoriaClick: (String) -> Unit) {
                 )
             }
         }
-        // Contenido que cambia según la pestaña seleccionada
         when (state) {
             0 -> MenuDelDiaScreen()
             1 -> CartaScreen(onCategoriaClick = onCategoriaClick)

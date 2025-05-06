@@ -249,8 +249,6 @@ data class ColorFamily(
     val onColorContainer: Color
 )
 
-
-
 @Composable
 fun Proyecto_ComedorTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

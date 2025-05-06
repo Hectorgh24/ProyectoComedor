@@ -19,21 +19,18 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun InformacionNutrimental(
     nombrePlatillo: String,
-    porcion: String,
     kilocalorias: String,
     hidratosCarbono: String,
     proteinas: String,
     lipidos: String,
-    modifier: Modifier = Modifier
 ) {
-
         Column(
             modifier = Modifier
                 //.fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Incluir el componente de DatoCurioso aquí mediante composición
-            DatoCurioso("Este platillo te aporta muchos nuetrientes ricos en calcio y más cositas lorem ipsun.......Este platillo te aporta muchos nuetrientes ricos en calcio y más cositas lorem ipsun.......")
+            // Incluir el componente de DatoCurioso
+            DatoCurioso("este platillo tiene raíces prehispánicas y era consumido tanto en rituales como en la vida cotidiana por pueblos como los nahuas y mexicas. Su nombre proviene del náhuatl chīl-atolli, que significa \"atole con chile")
 
             // Nombre del platillo y porción
             Text(
@@ -51,7 +48,6 @@ fun InformacionNutrimental(
                     valor = kilocalorias,
                     etiqueta = "KCAL",
                     descripcion = "Kilocalorías",
-                   // color = Color(0xFFFFE0B2),
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -59,7 +55,6 @@ fun InformacionNutrimental(
                     valor = hidratosCarbono,
                     etiqueta = "HC",
                     descripcion = "Hidratos de Carbono (g)",
-                    //color = Color(0xFFE1BEE7),
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -74,7 +69,6 @@ fun InformacionNutrimental(
                     valor = proteinas,
                     etiqueta = "P",
                     descripcion = "Proteínas (g)",
-                    //color = Color(0xFFBBDEFB),
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -82,7 +76,6 @@ fun InformacionNutrimental(
                     valor = lipidos,
                     etiqueta = "L",
                     descripcion = "Lípidos (g)",
-                   // color = Color(0xFFFFCCBC),
                     modifier = Modifier.weight(1f)
                 )
             }

@@ -19,9 +19,6 @@ fun BotonEnviar(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 24.dp),
-        /*colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF2E7D32)
-        )*/
     ) {
         Text("Enviar")
     }

@@ -6,7 +6,6 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
@@ -65,7 +64,6 @@ fun DropdownSelector(
                 Icon(
                     imageVector = Icons.Filled.ArrowDropDown,
                     contentDescription = null,
-                    //tint = Color(0xFF2e7d32)
                 )
             }
         )

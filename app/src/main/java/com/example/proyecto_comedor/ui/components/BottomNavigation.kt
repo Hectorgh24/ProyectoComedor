@@ -9,11 +9,8 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.VolunteerActivism
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.QrCodeScanner
 import androidx.compose.material.icons.outlined.VolunteerActivism
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-
 import androidx.compose.animation.Crossfade
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.outlined.LocationOn
@@ -56,9 +53,6 @@ fun BottomNavigation(navController: NavController) {
                         restoreState = true
                     }
                 },
-                /*colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color(0xFFd9e7ca) // Cambia este color por el que desees como fondo seleccionado
-                )*/
             )
         }
     }

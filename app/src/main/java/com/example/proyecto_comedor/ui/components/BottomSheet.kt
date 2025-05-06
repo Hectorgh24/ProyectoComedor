@@ -32,7 +32,6 @@ fun InformacionNutricional(
 
             InformacionNutrimental(
                 nombrePlatillo = "Chileatole de Verduras (1 taza / 240 ml)",
-                porcion = "1 taza / 240 ml",
                 kilocalorias = "160",
                 hidratosCarbono = "30",
                 proteinas = "4",
@@ -73,6 +72,7 @@ fun Comentario(
 
                 // Sección de satisfacción
                 SatisfaccionSeccion()
+
                 Spacer(modifier = Modifier.height(25.dp))
                 // Botón Enviar
                 BotonEnviar()

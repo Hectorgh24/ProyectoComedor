@@ -14,14 +14,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.proyecto_comedor.data.model.FoodItem
 
-data class FoodItem(
-    val name: String,
-    val imageRes: Int,
-    val rating: Float,
-    val reviewCount: Int,
-    val accompaniments: List<String>
-)
 
 @Composable
 fun FoodItemCard(
@@ -35,7 +29,6 @@ fun FoodItemCard(
             .fillMaxWidth()
             .padding(8.dp),
         shape = RoundedCornerShape(12.dp),
-       // colors = CardDefaults.cardColors(containerColor = Color(0xFFe7edde))
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Image(
@@ -93,7 +86,6 @@ fun FoodItemCard(
                     onClick = onCommentClick,
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(20.dp),
-                    //border = BorderStroke(1.dp, Color(0xFF79747e))
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Text("Comentario")
@@ -104,8 +96,6 @@ fun FoodItemCard(
                 Button(
                     onClick = onInfoClick,
                     modifier = Modifier.weight(1f),
-                    //colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF557f40)),
-                    //shape = RoundedCornerShape(20.dp)
                 ) {
                     Text("Información")
                 }

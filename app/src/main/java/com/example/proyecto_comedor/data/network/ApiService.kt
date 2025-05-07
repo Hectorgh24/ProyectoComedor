@@ -12,17 +12,12 @@ interface ApiService {
         suspend fun <nombre función>(<parámetros>): <tipo de retorno>
     */
 
-    /* Ejemplo de métodos para operaciones CRUD
-    @GET("comedores")
-    suspend fun getComedores(): List<DataClassModel>
+    @GET("desayunos_comidas/obtenerPorId/{id}")
+    suspend fun getDesayunoComidaPoId(@Path("id") id: Int): DesayunoComida
 
-    @GET("comedores/{id}")
-    suspend fun getComedor(@Path("id") id: String): DataClassModel
+    @GET("informacionNutrimental/obtenerInformacionNutrimentalPorId/{id}")
+    suspend fun getInformacionNutrimentalPorId(@Path("id") id: Int): Nutrimento
 
-    @POST("comedores")
-    suspend fun createComedor(@Body comedor: DataClassModel: DataClassModel
-
-    */
-
-    suspend fun getComedores(): List<ApiResponse>
+    @GET("producto_carta/obtenerTodos")
+    suspend fun getProductosCarta(): List<ProductoCarta>
 }

@@ -47,8 +47,8 @@ fun PromocionesScreen() {
                     contentDescription = "Promoción",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .height(180.dp)
-                        .width(300.dp)
+                        .height(500.dp)
+                        .width(370.dp)
                         .clip(RoundedCornerShape(12.dp))
                 )
             }

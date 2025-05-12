@@ -31,7 +31,7 @@ fun CategoriaDetalleScreen(nombreCategoria: String, navController: NavHostContro
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack, // Puedes usar AutoMirrored si está disponible
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack, // Puedes usar AutoMirrored si está disponible
                             contentDescription = "Volver"
                         )
                     }

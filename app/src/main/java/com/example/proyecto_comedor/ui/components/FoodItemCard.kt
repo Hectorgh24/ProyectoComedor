@@ -1,21 +1,19 @@
-package com.example.proyecto_comedor.ui.components
-
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.proyecto_comedor.data.model.FoodItem
-
 
 @Composable
 fun FoodItemCard(
@@ -31,8 +29,8 @@ fun FoodItemCard(
         shape = RoundedCornerShape(12.dp),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Image(
-                painter = painterResource(id = foodItem.imageRes),
+            AsyncImage(
+                model = foodItem.imageUrl,
                 contentDescription = foodItem.name,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -49,32 +47,12 @@ fun FoodItemCard(
                 fontWeight = FontWeight.Bold
             )
 
-            Row {
-                RatingBar(rating = foodItem.rating)
-                Text(
-                    text = " ${foodItem.rating} (${foodItem.reviewCount})",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Acompañado de:",
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium
+                text = foodItem.description,
+                style = MaterialTheme.typography.bodyMedium
             )
-
-            Column(modifier = Modifier.padding(start = 8.dp, top = 4.dp)) {
-                foodItem.accompaniments.forEach { item ->
-                    Text(
-                        text = "• $item",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(vertical = 2.dp)
-                    )
-                }
-            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -100,20 +78,6 @@ fun FoodItemCard(
                     Text("Información")
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun RatingBar(rating: Float, maxStars: Int = 5) {
-    Row {
-        repeat(maxStars) { index ->
-            val starFilled = index < rating
-            Text(
-                text = "★",
-                color = if (starFilled) Color(0xFFFFB800) else Color(0xFFDDDDDD),
-                fontSize = 18.sp
-            )
         }
     }
 }

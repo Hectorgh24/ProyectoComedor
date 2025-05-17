@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import com.example.proyecto_comedor.ui.theme.Proyecto_ComedorTheme
 
 
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,6 +14,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Proyecto_ComedorTheme {
                 AppNavigation()
+                //MainApp() // <- este inicia la navegación
             }
         }
     }

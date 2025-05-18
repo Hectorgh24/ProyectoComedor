@@ -1,12 +1,16 @@
 package com.example.proyecto_comedor.ui.components
 
 import EvaluacionSeccion
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.*
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.proyecto_comedor.ui.screen.InformacionNutrimentalUiState
+import com.example.proyecto_comedor.ui.screen.InformacionNutrimentalViewModel
+import com.example.proyecto_comedor.ui.screen.InformacionNutrimentalViewModel.Companion.Factory
 import com.example.proyecto_comedor.ui.components.Comentario.BotonEnviar
 import com.example.proyecto_comedor.ui.components.Comentario.BotonesSeccion
 import com.example.proyecto_comedor.ui.components.Comentario.SatisfaccionSeccion
@@ -18,25 +22,65 @@ fun InformacionNutricional(
     sheetState: SheetState,
     onDismissRequest: () -> Unit
 ) {
-    if (sheetState.isVisible) {
-        ModalBottomSheet(
-            onDismissRequest = { onDismissRequest() },
-            sheetState = sheetState
-        ) {
-            // Aquí va el contenido de tu BottomSheet (vacío por ahora)
-            Text(
-                text = "Información nutrimental",
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(16.dp)
-            )
+    if (!sheetState.isVisible) return
 
-            InformacionNutrimental(
-                nombrePlatillo = "Chileatole de Verduras (1 taza / 240 ml)",
-                kilocalorias = "160",
-                hidratosCarbono = "30",
-                proteinas = "4",
-                lipidos = "4"
+    // Obtain the ViewModel
+    val viewModel: InformacionNutrimentalViewModel = viewModel(factory = Factory)
+    val uiState: InformacionNutrimentalUiState by remember { derivedStateOf { viewModel.uiState } }
+
+    ModalBottomSheet(
+        onDismissRequest = onDismissRequest,
+        sheetState = sheetState
+    ) {
+        Column(Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+        ) {
+            Text(
+                text = "Información Nutrimental",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(bottom = 16.dp)
             )
+            when {
+                uiState.isLoading -> {
+                    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                }
+                uiState.isError -> {
+                    Text(
+                        text = "Error al cargar la información nutrimental",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                else -> {
+                    // Desayuno section
+                    uiState.desayuno?.let { info ->
+                        Text("Desayuno", style = MaterialTheme.typography.titleMedium)
+                        InformacionNutrimental(
+                            nombrePlatillo    = "Desayuno",
+                            kilocalorias      = info.kcal.toString(),
+                            hidratosCarbono   = info.hc.toString(),
+                            proteinas         = info.p.toString(),
+                            lipidos           = info.l.toString()
+                        )
+                        Spacer(Modifier.height(24.dp))
+                    }
+                    // Comida section
+                    uiState.comida?.let { info ->
+                        Text("Comida", style = MaterialTheme.typography.titleMedium)
+                        InformacionNutrimental(
+                            nombrePlatillo    = "Comida",
+                            kilocalorias      = info.kcal.toString(),
+                            hidratosCarbono   = info.hc.toString(),
+                            proteinas         = info.p.toString(),
+                            lipidos           = info.l.toString()
+                        )
+                        Spacer(Modifier.height(24.dp))
+                    }
+                }
+            }
         }
     }
 }
@@ -49,7 +93,7 @@ fun Comentario(
 ) {
     if (sheetState.isVisible) {
         ModalBottomSheet(
-            onDismissRequest = { onDismissRequest() },
+            onDismissRequest = onDismissRequest,
             sheetState = sheetState
         ) {
             Column(
@@ -57,32 +101,18 @@ fun Comentario(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
-                // Título principal
                 Text(
                     text = "Comentario",
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
-
-                // Sección de botones
                 BotonesSeccion()
-
-                // Sección de evaluación
                 EvaluacionSeccion()
-
-                // Sección de satisfacción
                 SatisfaccionSeccion()
-
                 Spacer(modifier = Modifier.height(25.dp))
-                // Botón Enviar
                 BotonEnviar()
-
-                // Espaciador para dar padding al final
                 Spacer(modifier = Modifier.height(25.dp))
             }
         }
     }
 }
-
-
-

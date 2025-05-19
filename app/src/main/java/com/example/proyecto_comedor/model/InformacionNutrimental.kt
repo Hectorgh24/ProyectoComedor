@@ -1,12 +1,15 @@
 package com.example.proyecto_comedor.model
 
-
-
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
+/**
+ * Representa la información nutrimental de un platillo.
+ * Le añadimos @JvmOverloads para que SimpleXML encuentre un constructor
+ * con valores por defecto y required=false para aceptar nodos ausentes.
+ */
 @Root(name = "informacion_nutrimental", strict = false)
-data class InformacionNutrimental(
+data class InformacionNutrimental @JvmOverloads constructor(
     @field:Element(name = "kcal", required = false)
     var kcal: Int = 0,
 

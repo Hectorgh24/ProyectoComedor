@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 
@@ -31,40 +30,34 @@ class InformacionNutrimentalViewModel(
     var uiState by mutableStateOf(InformacionNutrimentalUiState(isLoading = true))
         private set
 
-    init {
-        loadInfo()
-    }
+    init { loadInfo() }
 
     private fun loadInfo() {
         viewModelScope.launch {
+            Log.d("InfoVM", ">>>> iniciando loadInfo()")
             uiState = InformacionNutrimentalUiState(isLoading = true)
             try {
-                val (infoDesayuno, infoComida) = repo.getInfo()
+                val (infoDes, infoCom) = repo.getInfo()
+                Log.d("InfoVM", " Repo devolvió desayuno=$infoDes, comida=$infoCom")
                 uiState = InformacionNutrimentalUiState(
-                    desayuno = infoDesayuno,
-                    comida   = infoComida,
+                    desayuno = infoDes,
+                    comida   = infoCom,
                     isLoading = false
                 )
-                Log.d("InfoVM", "Loaded info: desayuno=$infoDesayuno, comida=$infoComida")
-            } catch (e: IOException) {
-                Log.e("InfoVM", "Network error: ${e.localizedMessage}", e)
-                uiState = InformacionNutrimentalUiState(isError = true)
-            } catch (e: HttpException) {
-                Log.e("InfoVM", "HTTP error: ${e.code()}", e)
-                uiState = InformacionNutrimentalUiState(isError = true)
             } catch (e: Exception) {
-                Log.e("InfoVM", "Unexpected error: ${e.localizedMessage}", e)
+                Log.e("InfoVM", "Error loadInfo(): ${e.localizedMessage}", e)
                 uiState = InformacionNutrimentalUiState(isError = true)
             }
+            Log.d("InfoVM", ">>>> loadInfo() terminó con uiState=$uiState")
         }
     }
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val app = (this[APPLICATION_KEY] as MenuDelDiaApplication)
-                val repoInfo = app.container2.informacionNutrimentalRepository
-                InformacionNutrimentalViewModel(repoInfo)
+                val app = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as MenuDelDiaApplication)
+                val repo = app.container2.informacionNutrimentalRepository
+                InformacionNutrimentalViewModel(repo)
             }
         }
     }

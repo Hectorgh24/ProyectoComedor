@@ -1,5 +1,6 @@
 package com.example.proyecto_comedor.ui.components
 
+
 import FoodItemCard
 import com.example.proyecto_comedor.data.model.FoodItem
 import androidx.compose.foundation.layout.*
@@ -15,10 +16,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SegmentedButton(
     desayunoItem: FoodItem,
-    comidaItem: FoodItem,
+    comidaItem:   FoodItem,
     onCommentClick: () -> Unit,
-    onInfoClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onInfoClick:    (Int) -> Unit,  // ahora recibe el índice seleccionado
+    modifier:       Modifier = Modifier
 ) {
     var selectedIndex by remember { mutableStateOf(0) }
     val options = listOf("Desayuno", "Comida")
@@ -28,6 +29,7 @@ fun SegmentedButton(
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
+        // Row de botones segmentados
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -39,8 +41,8 @@ fun SegmentedButton(
             ) {
                 options.forEachIndexed { index, label ->
                     MaterialSegmentedButton(
-                        shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                        onClick = { selectedIndex = index },
+                        shape    = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                        onClick  = { selectedIndex = index },
                         selected = index == selectedIndex
                     ) {
                         Text(text = label)
@@ -51,6 +53,7 @@ fun SegmentedButton(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Card del platillo correspondiente
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -58,9 +61,10 @@ fun SegmentedButton(
         ) {
             val item = if (selectedIndex == 0) desayunoItem else comidaItem
             FoodItemCard(
-                foodItem = item,
+                foodItem       = item,
                 onCommentClick = onCommentClick,
-                onInfoClick = onInfoClick
+                // pasamos el índice para que el caller sepa si es desayuno (0) o comida (1)
+                onInfoClick    = { onInfoClick(selectedIndex) }
             )
         }
     }

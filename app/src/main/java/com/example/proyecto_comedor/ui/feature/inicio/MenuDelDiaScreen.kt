@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
+
 import com.example.proyecto_comedor.ui.components.SegmentedButton
 import com.example.proyecto_comedor.ui.components.InformacionNutricional
 import com.example.proyecto_comedor.ui.components.Comentario
-import com.example.proyecto_comedor.ui.screen.MenuDelDiaUiState
 import com.example.proyecto_comedor.ui.screen.MenuDelDiaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -21,12 +21,14 @@ import com.example.proyecto_comedor.ui.screen.MenuDelDiaViewModel
 fun MenuDelDiaScreen(
     viewModel: MenuDelDiaViewModel = viewModel(factory = MenuDelDiaViewModel.Factory)
 ) {
-    // Directamente observa la propiedad mutableStateOf del ViewModel
     val uiState = viewModel.uiState
 
-    val infoSheet = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    // <-- guardamos qué sección (0 = desayuno, 1 = comida)
+    var selectedIndex by remember { mutableStateOf(0) }
+
+    val infoSheet    = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val commentSheet = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val scope = rememberCoroutineScope()
+    val scope        = rememberCoroutineScope()
 
     LazyColumn(
         modifier = Modifier
@@ -36,35 +38,35 @@ fun MenuDelDiaScreen(
     ) {
         item {
             when {
-                uiState.isLoading -> {
-                    Text("Cargando menú...", modifier = Modifier.padding(16.dp))
-                }
-                uiState.isError -> {
-                    Text("Error al cargar los menús.", modifier = Modifier.padding(16.dp))
-                }
+                uiState.isLoading -> Text("Cargando menú...", Modifier.padding(16.dp))
+                uiState.isError   -> Text("Error al cargar los menús.", Modifier.padding(16.dp))
                 uiState.desayuno != null && uiState.comida != null -> {
                     SegmentedButton(
-                        desayunoItem = uiState.desayuno,
-                        comidaItem = uiState.comida,
+                        desayunoItem   = uiState.desayuno,
+                        comidaItem     = uiState.comida,
                         onCommentClick = { scope.launch { commentSheet.show() } },
-                        onInfoClick    = { scope.launch { infoSheet.show() } },
+                        onInfoClick    = { idx ->
+                            // <-- aquí capturamos el índice
+                            selectedIndex = idx
+                            scope.launch { infoSheet.show() }
+                        },
                         modifier       = Modifier.padding(horizontal = 16.dp)
                     )
                 }
-                else -> {
-                    Text("No hay datos de menú disponibles.", modifier = Modifier.padding(16.dp))
-                }
+                else -> Text("No hay datos de menú disponibles.", Modifier.padding(16.dp))
             }
         }
     }
 
+    // le pasamos selectedIndex para saber qué pintar
     InformacionNutricional(
-        sheetState = infoSheet,
+        sheetState       = infoSheet,
+        selectedIndex    = selectedIndex,
         onDismissRequest = { scope.launch { infoSheet.hide() } }
     )
 
     Comentario(
-        sheetState = commentSheet,
+        sheetState       = commentSheet,
         onDismissRequest = { scope.launch { commentSheet.hide() } }
     )
 }

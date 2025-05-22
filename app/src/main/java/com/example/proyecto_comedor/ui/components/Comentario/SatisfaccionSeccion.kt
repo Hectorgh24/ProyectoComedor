@@ -1,5 +1,6 @@
 package com.example.proyecto_comedor.ui.components.Comentario
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -39,7 +40,7 @@ fun SatisfaccionSeccion(
             isSelected = selectedIndex == 0,
             onClick = {
                 selectedIndex = 0
-                onSatisfaccionSelected(0)
+                onSatisfaccionSelected(1) // 1 para muy malo
             }
         )
 
@@ -49,7 +50,7 @@ fun SatisfaccionSeccion(
             isSelected = selectedIndex == 1,
             onClick = {
                 selectedIndex = 1
-                onSatisfaccionSelected(1)
+                onSatisfaccionSelected(2) // 2 para malo
             }
         )
 
@@ -59,7 +60,7 @@ fun SatisfaccionSeccion(
             isSelected = selectedIndex == 2,
             onClick = {
                 selectedIndex = 2
-                onSatisfaccionSelected(2)
+                onSatisfaccionSelected(3) // 3 para regular
             }
         )
 
@@ -69,7 +70,7 @@ fun SatisfaccionSeccion(
             isSelected = selectedIndex == 3,
             onClick = {
                 selectedIndex = 3
-                onSatisfaccionSelected(3)
+                onSatisfaccionSelected(4) // 4 para bueno
             }
         )
 
@@ -79,7 +80,7 @@ fun SatisfaccionSeccion(
             isSelected = selectedIndex == 4,
             onClick = {
                 selectedIndex = 4
-                onSatisfaccionSelected(4)
+                onSatisfaccionSelected(5) // 5 para muy bueno
             }
         )
     }
@@ -96,6 +97,7 @@ fun SatisfactionEmoji(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(4.dp)
+            .clickable { onClick() }
     ) {
         Icon(
             imageVector = icon,

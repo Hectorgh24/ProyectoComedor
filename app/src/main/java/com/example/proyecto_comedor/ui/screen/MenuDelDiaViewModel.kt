@@ -21,6 +21,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 data class MenuDelDiaUiState(
     val desayuno: FoodItem? = null,
     val comida: FoodItem? = null,
+    val desayunoId: Int = 0,
+    val comidaId: Int = 0,
     val isLoading: Boolean = false,
     val isError: Boolean = false
 )
@@ -45,6 +47,8 @@ class MenuDelDiaViewModel(
                 uiState = MenuDelDiaUiState(
                     desayuno  = desayuno?.toFoodItem(),
                     comida    = comida?.toFoodItem(),
+                    desayunoId = desayuno?.id ?: 0,
+                    comidaId = comida?.id ?: 0,
                     isLoading = false
                 )
                 Log.d("ViewModel", "→ uiState updated: $uiState")

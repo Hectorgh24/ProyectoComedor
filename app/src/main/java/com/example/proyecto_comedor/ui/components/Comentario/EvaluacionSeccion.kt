@@ -10,7 +10,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EvaluacionSeccion() {
+fun EvaluacionSeccion(
+    onPrecioSelected: (Int) -> Unit = {},
+    onPorcionSelected: (Int) -> Unit = {},
+    onSaborSelected: (Int) -> Unit = {}
+) {
     // Sección de Evaluación
     Text(
         text = "Evaluación",
@@ -32,11 +36,30 @@ fun EvaluacionSeccion() {
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        DropdownSelector(label = "Precio", options = listOf("Bajo", "Medio", "Alto"))
-        DropdownSelector(label = "Porción", options = listOf("Poca", "Adecuada", "Mucha"))
-        DropdownSelector(label = "Sabor", options = listOf("Malo", "Regular", "Bueno", "Excelente"))
-        DropdownSelector(label = "Tiempo", options = listOf("Rápido", "Aceptable", "Lento"))
-        // Puedes agregar más Chips aquí si quieres
+        DropdownSelector(
+            label = "Precio",
+            options = listOf("Barato", "Justo", "Caro"),
+            onSelectionChange = { value ->
+                val index = listOf("Barato", "Justo", "Caro").indexOf(value) + 1
+                onPrecioSelected(index)
+            }
+        )
+        DropdownSelector(
+            label = "Porción",
+            options = listOf("Poca", "Adecuada", "Generosa"),
+            onSelectionChange = { value ->
+                val index = listOf("Poca", "Adecuada", "Generosa").indexOf(value) + 1
+                onPorcionSelected(index)
+            }
+        )
+        DropdownSelector(
+            label = "Sabor",
+            options = listOf("Malo", "Regular", "Bueno", "Excelente"),
+            onSelectionChange = { value ->
+                val index = listOf("Malo", "Regular", "Bueno", "Excelente").indexOf(value) + 1
+                onSaborSelected(index)
+            }
+        )
     }
 }
 

@@ -9,9 +9,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.proyecto_comedor.MenuDelDiaApplication
 import com.example.proyecto_comedor.ui.components.Informacion.InformacionNutrimental
+import com.example.proyecto_comedor.ui.screen.ComentarioViewModel
 import com.example.proyecto_comedor.ui.screen.InformacionNutrimentalUiState
 import com.example.proyecto_comedor.ui.screen.InformacionNutrimentalViewModel
 import com.example.proyecto_comedor.ui.screen.InformacionNutrimentalViewModel.Companion.Factory
@@ -96,9 +99,22 @@ fun InformacionNutricional(
 @Composable
 fun Comentario(
     sheetState: SheetState,
+    menuId: Int, // ID del menú del día (desayuno o comida)
     onDismissRequest: () -> Unit
 ) {
     if (!sheetState.isVisible) return
+    
+    val app = LocalContext.current.applicationContext as MenuDelDiaApplication
+    val viewModel: ComentarioViewModel = viewModel(
+        factory = ComentarioViewModel.provideFactory(app.container4.comentarioRepository)
+    )
+    
+    val uiState by remember { derivedStateOf { viewModel.uiState } }
+    
+    // Actualizar el ID cuando se abre el sheet
+    LaunchedEffect(menuId) {
+        viewModel.actualizarIdDesayunoComida(menuId)
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -114,11 +130,56 @@ fun Comentario(
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
+            
+            // Ignoramos los botones QR como solicitaste
             BotonesSeccion()
-            EvaluacionSeccion()
-            SatisfaccionSeccion()
+            
+            EvaluacionSeccion(
+                onPrecioSelected = { viewModel.actualizarPrecio(it) },
+                onPorcionSelected = { viewModel.actualizarPorcion(it) },
+                onSaborSelected = { viewModel.actualizarSabor(it) }
+            )
+            
+            SatisfaccionSeccion(
+                onSatisfaccionSelected = { viewModel.actualizarSatisfaccionGeneral(it) }
+            )
+            
             Spacer(modifier = Modifier.height(25.dp))
-            BotonEnviar()
+            
+            // Mostrar estado de carga o error
+            when {
+                uiState.isLoading -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                uiState.isError -> {
+                    Text(
+                        text = "Error: ${uiState.errorMessage}",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                uiState.isSuccess -> {
+                    Text(
+                        text = "¡Comentario enviado exitosamente!",
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+            }
+            
+            BotonEnviar(
+                onEnviarClick = { 
+                    viewModel.enviarComentario()
+                }
+            )
+            
             Spacer(modifier = Modifier.height(25.dp))
         }
     }

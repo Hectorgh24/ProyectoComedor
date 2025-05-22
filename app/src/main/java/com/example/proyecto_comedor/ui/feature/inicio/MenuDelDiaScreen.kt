@@ -25,6 +25,7 @@ fun MenuDelDiaScreen(
 
     // <-- guardamos qué sección (0 = desayuno, 1 = comida)
     var selectedIndex by remember { mutableStateOf(0) }
+    var selectedMenuId by remember { mutableStateOf(0) }
 
     val infoSheet    = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val commentSheet = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -44,13 +45,22 @@ fun MenuDelDiaScreen(
                     SegmentedButton(
                         desayunoItem   = uiState.desayuno,
                         comidaItem     = uiState.comida,
-                        onCommentClick = { scope.launch { commentSheet.show() } },
+                        onCommentClick = { 
+                            // Determinar el ID basado en el índice seleccionado actualmente
+                            val menuId = if (selectedIndex == 0) {
+                                uiState.desayunoId
+                            } else {
+                                uiState.comidaId
+                            }
+                            selectedMenuId = menuId
+                            scope.launch { commentSheet.show() } 
+                        },
                         onInfoClick    = { idx ->
                             // <-- aquí capturamos el índice
                             selectedIndex = idx
                             scope.launch { infoSheet.show() }
                         },
-                        modifier       = Modifier.padding(horizontal = 16.dp)
+                        modifier = Modifier.padding(horizontal = 16.dp)
                     )
                 }
                 else -> Text("No hay datos de menú disponibles.", Modifier.padding(16.dp))
@@ -67,6 +77,7 @@ fun MenuDelDiaScreen(
 
     Comentario(
         sheetState       = commentSheet,
+        menuId           = selectedMenuId,
         onDismissRequest = { scope.launch { commentSheet.hide() } }
     )
 }

@@ -1,5 +1,6 @@
 package com.example.proyecto_comedor.ui.navigation
 
+
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -9,13 +10,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.proyecto_comedor.ui.components.CategoriaDetalleScreen
-import com.example.proyecto_comedor.ui.feature.dropdown.AcercaScreen
-import com.example.proyecto_comedor.ui.feature.beca.BecaScreen
-import com.example.proyecto_comedor.ui.feature.comedores.ComedoresScreen
-import com.example.proyecto_comedor.ui.feature.dropdown.ConfiguracionScreen
 import com.example.proyecto_comedor.ui.feature.inicio.InicioScreen
+import com.example.proyecto_comedor.ui.feature.comedores.ComedoresScreen
+import com.example.proyecto_comedor.ui.feature.beca.BecaScreen
+import com.example.proyecto_comedor.ui.feature.dropdown.AcercaScreen
+import com.example.proyecto_comedor.ui.feature.dropdown.ConfiguracionScreen
 import com.example.proyecto_comedor.ui.feature.dropdown.UsuarioScreen
+import com.example.proyecto_comedor.ui.components.CategoriaDetalleScreen
 
 @Composable
 fun AppNavGraph(
@@ -23,37 +24,26 @@ fun AppNavGraph(
     paddingValues: PaddingValues
 ) {
     NavHost(
-        navController = navController,
+        navController  = navController,
         startDestination = "inicio_screen",
-        modifier = Modifier.padding(paddingValues)
+        modifier       = Modifier.padding(paddingValues)
     ) {
         composable("inicio_screen") {
-            InicioScreen(navController = navController)
+            InicioScreen(navController)
         }
-        composable("comedores-screen") {
-            ComedoresScreen()
-        }
-        composable("beca_screen") {
-            BecaScreen()
-        }
-        // Aquí puedes agregar las pantallas que usarás desde el DropdownMenu
-        composable("usuario") {
-            UsuarioScreen(navController = navController)
-        }
-        composable("configuracion") {
-            ConfiguracionScreen(navController = navController)
-        }
-        composable("acerca") {
-            AcercaScreen(navController = navController)
-        }
+        composable("comedores-screen") { ComedoresScreen() }
+        composable("beca_screen")      { BecaScreen() }
+        composable("usuario")          { UsuarioScreen(navController) }
+        composable("configuracion")    { ConfiguracionScreen(navController) }
+        composable("acerca")           { AcercaScreen(navController) }
 
-        // Una única ruta parameterizada para todas las categorías
+        // Ruta parameterizada para las categorías de la carta
         composable(
             route = "categoria/{nombreCategoria}",
             arguments = listOf(navArgument("nombreCategoria") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val nombreCategoria = backStackEntry.arguments?.getString("nombreCategoria") ?: "Desconocida"
-            CategoriaDetalleScreen(nombreCategoria = nombreCategoria, navController = navController)
+        ) { backStack ->
+            val nombre = backStack.arguments?.getString("nombreCategoria") ?: ""
+            CategoriaDetalleScreen(nombreCategoria = nombre, navController = navController)
         }
     }
 }

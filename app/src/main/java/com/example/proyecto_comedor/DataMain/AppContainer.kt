@@ -6,18 +6,11 @@ import com.example.proyecto_comedor.DataMain.NetworkMenuDelDiaRepository
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
-/**
- * Contenedor de inyección de dependencias a nivel de aplicación.
- */
+
 interface AppContainer {
     val menuDelDiaRepository: MenuDelDiaRepository
 }
 
-/**
- * Implementación del contenedor de dependencias.
- *
- * Los objetos son inicializados de forma perezosa y comparten la misma instancia durante toda la aplicación.
- */
 class DefaultAppContainer : AppContainer {
 
     private val baseUrl = "https://vmonge.me/" // 10.0.2.2 es localhost para el emulador Android

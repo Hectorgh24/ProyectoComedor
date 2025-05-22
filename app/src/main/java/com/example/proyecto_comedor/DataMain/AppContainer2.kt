@@ -6,9 +6,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import com.example.proyecto_comedor.network.MenuApiService2
 
-/**
- * Contenedor DI para información nutrimental
- */
 interface AppContainer2 {
     val informacionNutrimentalRepository: InformacionNutrimentalRepository
 }

@@ -24,10 +24,10 @@ fun CategoriasGrid(onCategoriaClick: (String) -> Unit) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
         val categorias = listOf(
-            "Antojitos", "Guarniciones",
-            "Sandwiches", "Tortas",
-            "Postres", "Otros",
-            "Label", "Label"
+            "Platillos", "Sandwiches y Tortas",
+            "Sugerencia del Chef", "Postres",
+            "Bebidas", "Ingredientes Extra",
+            "otros"
         )
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),

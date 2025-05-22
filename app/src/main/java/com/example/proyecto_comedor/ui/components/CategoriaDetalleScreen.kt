@@ -1,76 +1,56 @@
 package com.example.proyecto_comedor.ui.components
 
-import androidx.compose.foundation.background
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import com.example.proyecto_comedor.MenuDelDiaApplication
+import com.example.proyecto_comedor.model.Product
+import com.example.proyecto_comedor.ui.screen.ProductViewModel
+import com.example.proyecto_comedor.ui.screen.ProductViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoriaDetalleScreen(nombreCategoria: String, navController: NavHostController) {
+fun CategoriaDetalleScreen(
+    nombreCategoria: String,
+    navController: NavController
+) {
+    // Accede al Application para obtener container3.productRepository
+    val context = LocalContext.current.applicationContext as MenuDelDiaApplication
+    val factory = ProductViewModelFactory(
+        repo = context.container3.productRepository,
+        categoria = nombreCategoria
+    )
+    val viewModel: ProductViewModel = viewModel(factory = factory)
+
+    val items by viewModel.items.collectAsState()
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(nombreCategoria)
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Volver"
-                        )
-                    }
-                }
-            )
+            TopAppBar(title = { Text(nombreCategoria) })
         }
-    ) { innerPadding ->
+    ) { padding ->
         LazyColumn(
-            contentPadding = innerPadding,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(10) { index ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 4.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(60.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(Color.LightGray)
-
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Column {
-                            Text(
-                                text = "Item ${index + 1} de $nombreCategoria",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Text(
-                                text = "$${(index + 1) * 10}.00",
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        }
-                    }
-                }
+            items(items) { product ->
+                ProductCard(
+                    nombre      = product.nombre,
+                    descripcion = product.descripcion,
+                    precio      = product.precio.toString(),
+                    imageUrl    = product.imgUrl
+                )
             }
         }
     }

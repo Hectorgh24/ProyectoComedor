@@ -11,8 +11,6 @@ interface MenuDelDiaRepository {
     suspend fun getMenus(): List<MenuDelDia>
 }
 
-// DataMain/MenuDelDiaRepository.kt
-
 class NetworkMenuDelDiaRepository(
     private val api: MenuApiService
 ) : MenuDelDiaRepository {
@@ -36,16 +34,9 @@ class NetworkMenuDelDiaRepository(
             Log.e("Repo", "Comida 404 o body nulo para fecha $fecha")
             emptyList()
         }
-
-        // Combina: desayuno primero, luego comida
         return listaDesayuno + listaComida
     }
 
-    /**
-     * Devuelve la fecha en "yyyy-MM-dd":
-     * - Si hoy es sábado o domingo, retrocede hasta el viernes anterior.
-     * - En cualquier otro caso, usa la fecha de hoy.
-     */
     private fun obtenerFechaLaborable(): String {
         val cal = Calendar.getInstance(Locale.US)
         when (cal.get(Calendar.DAY_OF_WEEK)) {
